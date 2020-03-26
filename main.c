@@ -3,14 +3,13 @@
 #define MAXIN 100
 
 void input(char in[]);
+char get_operator(void);
 
 int main()
 {
 	char usrin[MAXIN];
 	double stack[MAXIN];
 	int pointer, end, output, i;
-	char operator;
-	operator = 0;
 	end = 0;
 	pointer = 0;
 	while (!end) {
@@ -18,7 +17,7 @@ int main()
 		stack[pointer] = atof(usrin);
 		printf("%f", stack[pointer]);
 		++pointer;
-		if ((operator=getchar()) == '+' && pointer >= 2) {
+		if (get_operator() == '+' && pointer >= 2) {
 			for (int i = (pointer-1); i >= 0; --i) {
 				output += (stack[i] + stack[i-1]);
 			}
@@ -31,6 +30,9 @@ void input(char in[]) {
 	int c, i;
 	i = 0;
 	while ((c=getchar()) != '\n') {
+		/*if (c=='+' || c== '-' || c== '*' || c=='/')
+			return c;*/
+
 		in[i] = c;
 		++i;
 	}
@@ -38,4 +40,13 @@ void input(char in[]) {
 		in[i] = '\0';
 	else
 		in[MAXIN - 1] = '\0';
+}
+
+char get_operator(void) {
+	int i;
+	char operator, c;
+	while ((c=getchar()) != '\n' && (c=='+' || c== '-' || c== '*' || c=='/')) {
+		operator = c;
+	}
+	return operator;
 }
