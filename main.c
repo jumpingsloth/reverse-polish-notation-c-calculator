@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
 #define MAXIN 100
 #define TRUE 1
 #define FALSE 0
@@ -15,6 +17,7 @@ void multiply(void);
 void subtract(void);
 void divide(void);
 void power(void);
+void squareroot(void);
 
 double stack[MAXIN];
 int pointer;
@@ -46,6 +49,9 @@ int main()
 					break;
 				case '^':
 					power();
+					break;
+				case 'r':
+					squareroot();
 					break;
 				case '.':
 					end = TRUE;
@@ -130,4 +136,8 @@ void power(void) {
 	for (i=2; i <= last; ++i)
 		out = out * first;
 	push(out);
+}
+
+void squareroot(void) {
+	push(sqrt(pop()));
 }
