@@ -7,11 +7,13 @@ typedef unsigned char bool;
 
 void input(char in[]);
 void push(double);
-double pop();
+double pop(void);
 bool is_number(char item[]);
 void add(void);
 void printstack(void);
-
+void multiply(void);
+void subtract(void);
+void divide(void);
 
 double stack[MAXIN];
 int pointer;
@@ -33,10 +35,13 @@ int main()
 					add();
 					break;
 				case '-':
-					// subtract();
+					subtract();
 					break;
 				case '*':
-					// multiply();
+					multiply();
+					break;
+				case '/':
+					divide();
 					break;
 				case '.':
 					end = TRUE;
@@ -73,13 +78,14 @@ void push(double number) {
 	++pointer;
 }
 
-double pop() {
+double pop(void) {
 	if (pointer > 0) {
 		--pointer;
 		return stack[pointer];
 	} else {
 		perror("Error: stack is empty");
 	}
+	return 0;
 }
 
 void add(void) {
@@ -89,6 +95,24 @@ void add(void) {
 void printstack(void) {
 	int i;
 	for (i=0; i < pointer; ++i) {
-		printf("\nstack at %d: %f", i, stack[i]);
+		printf("stack at %d: %f\n", i, stack[i]);
 	}
+}
+
+void multiply(void) {
+	push(pop() * pop());
+}
+
+void subtract(void) {
+	double first, last;
+	last = pop();
+	first = pop();
+	push(first - last);
+}
+
+void divide(void) {
+	double first, last;
+	last = pop();
+	first = pop();
+	push(first / last);
 }
