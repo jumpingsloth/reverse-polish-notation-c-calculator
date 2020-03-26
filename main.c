@@ -3,45 +3,62 @@
 #define MAXIN 100
 #define TRUE 1
 #define FALSE 0
+typedef unsigned char bool;
+
 void input(char in[]);
-/*char get_operator(void);*/
+void push(double);
+double pop();
+bool is_number(char item[]);
+void add(void);
+void printstack(void);
+
+
+double stack[MAXIN];
+int pointer;
 
 int main()
 {
 	char usrin[MAXIN];
-	double stack[MAXIN];
-	int pointer, end, i;
-	double output;
-	output = 0;
-	end = FALSE;
+	int i;
+	bool end = FALSE;
 	pointer = 0;
+
 	while (!end) {
 		input(usrin);
-		if (pointer >= 1 && usrin[0] == '+') {
-			for (i=0; i <= (pointer-1) ; ++i) {
-				printf("\nstack at %d: %f", i, stack[i]);
-			}
-			stack[pointer-2] = (stack[pointer-1] + stack[pointer-2]);
-			stack[pointer-1] = 0;
-			printf("\n\noutput: %f\n", stack[pointer-2]);
-		} else if (usrin[0] == '.') {
-			end = TRUE;
+		if (is_number(usrin)) {
+			push(atof(usrin));
 		} else {
-			stack[pointer] = atof(usrin);
-			printf("%f\n", stack[pointer]);
-			++pointer;
+			switch( usrin[0]) {
+				case '+':
+					add();
+					break;
+				case '-':
+					// subtract();
+					break;
+				case '*':
+					// multiply();
+					break;
+				case '.':
+					end = TRUE;
+					break;
+
+				default:
+					printf("Invalid input : %s", usrin);
+			}
 		}
+		printstack();
 	}
 	return 0;
+}
+
+bool is_number(char item[]) {
+	return item[0]>='0' && item[0]<='9';
 }
 
 void input(char in[]) {
 	int c, i;
 	i = 0;
 	while ((c=getchar()) != '\n') {
-		/*if (c=='+' || c== '-' || c== '*' || c=='/')
-			return c;*/
-
 		in[i] = c;
 		++i;
 	}
@@ -51,11 +68,27 @@ void input(char in[]) {
 		in[MAXIN - 1] = '\0';
 }
 
-/*char get_operator(void) {
-	int i;
-	char operator, c;
-	while ((c=getchar()) != '\n' && (c=='+' || c== '-' || c== '*' || c=='/')) {
-		operator = c;
+void push(double number) {
+	stack[pointer] = number;
+	++pointer;
+}
+
+double pop() {
+	if (pointer > 0) {
+		--pointer;
+		return stack[pointer];
+	} else {
+		perror("Error: stack is empty");
 	}
-	return operator;
-}*/
+}
+
+void add(void) {
+	push(pop() + pop());
+}
+
+void printstack(void) {
+	int i;
+	for (i=0; i < pointer; ++i) {
+		printf("\nstack at %d: %f", i, stack[i]);
+	}
+}
