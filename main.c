@@ -14,6 +14,7 @@ void printstack(void);
 void multiply(void);
 void subtract(void);
 void divide(void);
+void power(void);
 
 double stack[MAXIN];
 int pointer;
@@ -43,12 +44,15 @@ int main()
 				case '/':
 					divide();
 					break;
+				case '^':
+					power();
+					break;
 				case '.':
 					end = TRUE;
 					break;
 
 				default:
-					printf("Invalid input : %s", usrin);
+					printf("Invalid input : %s\n", usrin);
 			}
 		}
 		printstack();
@@ -115,4 +119,15 @@ void divide(void) {
 	last = pop();
 	first = pop();
 	push(first / last);
+}
+
+void power(void) {
+	double first, last, out;
+	int i;
+	last = pop();
+	first = pop();
+	out = first;
+	for (i=2; i <= last; ++i)
+		out = out * first;
+	push(out);
 }
