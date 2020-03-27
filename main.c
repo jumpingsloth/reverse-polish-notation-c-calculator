@@ -28,17 +28,18 @@ bool end = FALSE;
 
 int main(int argc, char **argv)
 {
-	printf("\nEnter your calculation\n");
 	char usrin[MAXIN];
 	int j;
 
-	for (j=1; j < argc; ++j) {
-		handle(argv[j]);
-	}
 	if (argc < 2) {
+		printf("\nEnter your calculation\n");
 		while (!end) {
 			input(usrin);
 			handle(usrin);
+		}
+	} else {
+		for (j=1; j < argc; ++j) {
+			handle(argv[j]);
 		}
 	}
 	return 0;
