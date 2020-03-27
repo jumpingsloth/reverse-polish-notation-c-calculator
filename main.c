@@ -20,8 +20,11 @@ void power(void);
 void clearstack(void);
 void help(void);
 void handle(char in[]);
+void printvar(void);
+void clearvar(void);
 
 double stack[MAXIN];
+double variables[3];
 int pointer = 0;
 bool end = FALSE;
 
@@ -132,11 +135,26 @@ void clearstack(void) {
 	pointer = 0;
 }
 
+void printvar(void) {
+	printf("\nVariables:\n");
+	printf("a:\t%f\n", variables[0]);
+	printf("b:\t%f\n", variables[1]);
+	printf("c:\t%f\n", variables[2]);
+}
+
+void clearvar(void) {
+	int i;
+	for (i=0; i<=2; ++i) {
+		variables[i] = 0;
+	}
+}
+
 void help(void) {
 	printf("\nCommands:\n");
 	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'pi':\tconstant pi\n'e':\tconstant e\n");
-	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n'log':\tlogarithm\n\n'dup':\tduplicate last item on stack\n'!':"\
-		"\tclear stack\n'?':\thelp\n'.':\tquit\n");
+	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n'log':\tlogarithm\n\n");
+	printf("'->a/b/c':\tassign variable a/b/c\n'a/b/c':\tadd variable to stack\n'var':\tprint variables\n'!var':\tclear variables\n\n");
+	printf("'dup':\tduplicate last item on stack\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
 
 void handle(char in[]) {
@@ -154,8 +172,31 @@ void handle(char in[]) {
 			push(log(pop()));
 		} else if (strcmp(in, "dup") == 0) {
 			push(top());
+		} else if (strcmp(in, "->a") == 0) {
+			variables[0] = pop();
+			printvar();
+		} else if (strcmp(in, "->b") == 0) {
+			variables[1] = pop();
+			printvar();
+		} else if (strcmp(in, "->c") == 0) {
+			variables[2] = pop();
+			printvar();
+		} else if (strcmp(in, "var") == 0) {
+			printvar();
+		} else if (strcmp(in, "!var") == 0) {
+			clearvar();
+			printf("Ok, clear variables\n");
 		} else if (strlen(in) < 2) {
 			switch (in[0]) {
+				case 'a':
+					push(variables[0]);
+					break;
+				case 'b':
+					push(variables[1]);
+					break;
+				case 'c':
+					push(variables[2]);
+					break;
 				case '+':
 					push(pop() + pop());
 					break;
