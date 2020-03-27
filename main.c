@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 #define MAXIN 100
 #define TRUE 1
@@ -11,18 +12,14 @@ void input(char in[]);
 void push(double);
 double pop(void);
 bool is_number(char item[]);
-void add(void);
 void printstack(void);
-void multiply(void);
 void subtract(void);
 void divide(void);
 void power(void);
-void squareroot(void);
 void clearstack(void);
 void help(void);
 void handle(char in[]);
-void const_pi(void);
-void const_e(void);
+void duplicate(void);
 
 double stack[MAXIN];
 int pointer = 0;
@@ -79,10 +76,6 @@ double pop(void) {
 	return 0;
 }
 
-void add(void) {
-	push(pop() + pop());
-}
-
 void printstack(void) {
 	int i;
 	printf("\n");
@@ -90,10 +83,6 @@ void printstack(void) {
 		printf("%d:\t%f\n", i, stack[i]);
 	}
 	printf("\n");
-}
-
-void multiply(void) {
-	push(pop() * pop());
 }
 
 void subtract(void) {
@@ -117,10 +106,6 @@ void power(void) {
 	push(pow(first, last));
 }
 
-void squareroot(void) {
-	push(sqrt(pop()));
-}
-
 void clearstack(void) {
 	int i;
 	for (i=0; i<=MAXIN; ++i) {
@@ -131,8 +116,8 @@ void clearstack(void) {
 
 void help(void) {
 	printf("\nCommands:\n");
-	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'p':\tconstant pi\n'e':\tconstant e\n");
-	printf("'^':\tpower\n'r':\tsquare root\n\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
+	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'pi':\tconstant pi\n'e':\tconstant e\n");
+	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n\n'dup':\tduplicate last item on stack\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
 
 void handle(char in[]) {
@@ -140,54 +125,63 @@ void handle(char in[]) {
 	if (is_number(in)) {
 		push(atof(in));
 	} else {
-		switch( in[0]) {
-			case '+':
-				add();
-				break;
-			case '-':
-				subtract();
-				break;
-			case '*':
-				multiply();
-				break;
-			case '/':
-				divide();
-				break;
-			case '^':
-				power();
-				break;
-			case 'r':
-				squareroot();
-				break;
-			case 'p':
-				const_pi();
-				break;
-			case 'e':
-				const_e();
-				break;
-			case '!':
-				clearstack();
-				printf("Ok, clear stack\n");
-				break;
-			case '?':
-				help();
-				break;
-			case '.':
-				end = TRUE;
-				printf("Ok, quit\n");
-				break;
+		if (strcmp(in, "pi") == 0) {
+			push(M_PI);
+		} else if (strcmp(in, "sin") == 0) {
+			push(sin(pop()));
+		} else if (strcmp(in, "cos") == 0) {
+			push(cos(pop()));
+		} else if (strcmp(in, "log") == 0) {
+			push(log(pop()));
+		} else if (strcmp(in, "dup") == 0) {
+			duplicate();
+		} else {
+			switch (in[0]) {
+				case '+':
+					push(pop() + pop());
+					break;
+				case '-':
+					subtract();
+					break;
+				case '*':
+					push(pop() * pop());
+					break;
+				case '/':
+					divide();
+					break;
+				case '^':
+					power();
+					break;
+				case 'r':
+					push(sqrt(pop()));
+					break;
+				case 'e':
+					push(M_E);
+					break;
+				case '!':
+					clearstack();
+					printf("Ok, clear stack\n");
+					break;
+				case '?':
+					help();
+					break;
+				case '.':
+					end = TRUE;
+					printf("Ok, quit\n");
+					break;
 
-			default:
-				printf("Invalid input : %s\n", in);
+				default:
+					printf("Invalid input : %s\n", in);
+			}
 		}
 	}
 	printstack();
 }
 
-void const_pi(void) {
-	push(M_PI);
+void duplicate(void) {
+	double item;
+	item = pop();
+	++pointer;
+	push(item);
 }
 
-void const_e() {
-	push(M_E);
-}
