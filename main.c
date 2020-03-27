@@ -22,6 +22,7 @@ void help(void);
 void handle(char in[]);
 void printvar(void);
 void clearvar(void);
+void faculty(void);
 
 double stack[MAXIN];
 double variables[3];
@@ -149,6 +150,21 @@ void clearvar(void) {
 	}
 }
 
+void faculty(void) {
+	int i, in;
+	long out;
+	out = 1;
+	in = (int)pop();
+	if (in < 0) {
+		printf("Error! Factorial of a negative number doesn't exist.");
+	} else {
+		for (i = i; i <= in; ++i) {
+			out *= i;
+		}
+		push((double)out);
+	}
+}
+
 void help(void) {
 	printf("\nCommands:\n");
 	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'pi':\tconstant pi\n'e':\tconstant e\n");
@@ -186,6 +202,8 @@ void handle(char in[]) {
 		} else if (strcmp(in, "!var") == 0) {
 			clearvar();
 			printf("Ok, clear variables\n");
+		} else if (strcmp(in, "fac") == 0) {
+			faculty();
 		} else if (strlen(in) < 2) {
 			switch (in[0]) {
 				case 'a':
