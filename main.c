@@ -18,12 +18,14 @@ void subtract(void);
 void divide(void);
 void power(void);
 void squareroot(void);
+void clearstack(void);
 
 double stack[MAXIN];
 int pointer;
 
 int main()
 {
+	printf("\nEnter your calculation\n");
 	char usrin[MAXIN];
 	int i;
 	bool end = FALSE;
@@ -53,8 +55,13 @@ int main()
 				case 'r':
 					squareroot();
 					break;
+				case '!':
+					clearstack();
+					printf("Ok, clear stack\n");
+					break;
 				case '.':
 					end = TRUE;
+					printf("Ok, quit\n");
 					break;
 
 				default:
@@ -105,7 +112,7 @@ void add(void) {
 void printstack(void) {
 	int i;
 	for (i=0; i < pointer; ++i) {
-		printf("stack at %d: %f\n", i, stack[i]);
+		printf("%d:\t%f\n", i, stack[i]);
 	}
 }
 
@@ -140,4 +147,12 @@ void power(void) {
 
 void squareroot(void) {
 	push(sqrt(pop()));
+}
+
+void clearstack(void) {
+	int i;
+	for (i=0; i<=MAXIN; ++i) {
+		stack[i] = 0;
+	}
+	pointer = 0;
 }
