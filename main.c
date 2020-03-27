@@ -58,7 +58,13 @@ int main(int argc, char **argv)
 }
 
 bool is_number(char item[]) {
-	return item[0]>='0' && item[0]<='9';
+	if (item[0] == '-' && item[1]>='0' && item[1]<='9') {
+		return TRUE;
+	} else if (item[0]>='0' && item[0]<='9') {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
 }
 
 void input(char in[]) {
