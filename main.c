@@ -36,6 +36,15 @@ int main(int argc, char **argv)
 			input(usrin);
 			handle(usrin);
 		}
+	} else if (strcmp(argv[1], "-o") == 0) {
+		for (j=2; j < argc; ++j) {
+			handle(argv[j]);
+		}
+		printf("\nEnter your calculation\n");
+		while (!end) {
+			input(usrin);
+			handle(usrin);
+		}
 	} else {
 		for (j=1; j < argc; ++j) {
 			handle(argv[j]);
