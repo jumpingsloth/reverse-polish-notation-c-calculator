@@ -21,6 +21,8 @@ void squareroot(void);
 void clearstack(void);
 void help(void);
 void handle(char in[]);
+void const_pi(void);
+void const_e(void);
 
 double stack[MAXIN];
 int pointer = 0;
@@ -86,6 +88,7 @@ void printstack(void) {
 	for (i=0; i < pointer; ++i) {
 		printf("%d:\t%f\n", i, stack[i]);
 	}
+	printf("\n");
 }
 
 void multiply(void) {
@@ -131,7 +134,7 @@ void clearstack(void) {
 
 void help(void) {
 	printf("\nCommands:\n");
-	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n");
+	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'p'\tconstant pi\n'e'\tconstant e");
 	printf("'^':\tpower\n'r':\tsquare root\n\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n\n");
 }
 
@@ -159,6 +162,12 @@ void handle(char in[]) {
 			case 'r':
 				squareroot();
 				break;
+			case 'p':
+				const_pi();
+				break;
+			case 'e':
+				const_e();
+				break;
 			case '!':
 				clearstack();
 				printf("Ok, clear stack\n");
@@ -176,4 +185,12 @@ void handle(char in[]) {
 		}
 	}
 	printstack();
+}
+
+void const_pi(void) {
+	push(M_PI);
+}
+
+void const_e() {
+	push(M_E);
 }
