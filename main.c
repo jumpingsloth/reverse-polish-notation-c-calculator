@@ -19,6 +19,7 @@ void divide(void);
 void power(void);
 void squareroot(void);
 void clearstack(void);
+void help(void);
 
 double stack[MAXIN];
 int pointer;
@@ -58,6 +59,9 @@ int main()
 				case '!':
 					clearstack();
 					printf("Ok, clear stack\n");
+					break;
+				case '?':
+					help();
 					break;
 				case '.':
 					end = TRUE;
@@ -155,4 +159,10 @@ void clearstack(void) {
 		stack[i] = 0;
 	}
 	pointer = 0;
+}
+
+void help(void) {
+	printf("\nCommands:\n");
+	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n");
+	printf("'^':\tpower\n'r':\tsquare root\n\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
