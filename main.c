@@ -20,59 +20,26 @@ void power(void);
 void squareroot(void);
 void clearstack(void);
 void help(void);
+void handle(char in[]);
 
 double stack[MAXIN];
-int pointer;
+int pointer = 0;
+bool end = FALSE;
 
-int main()
+int main(int argc, char **argv)
 {
 	printf("\nEnter your calculation\n");
 	char usrin[MAXIN];
-	int i;
-	bool end = FALSE;
-	pointer = 0;
+	int j;
 
-	while (!end) {
-		input(usrin);
-		if (is_number(usrin)) {
-			push(atof(usrin));
-		} else {
-			switch( usrin[0]) {
-				case '+':
-					add();
-					break;
-				case '-':
-					subtract();
-					break;
-				case '*':
-					multiply();
-					break;
-				case '/':
-					divide();
-					break;
-				case '^':
-					power();
-					break;
-				case 'r':
-					squareroot();
-					break;
-				case '!':
-					clearstack();
-					printf("Ok, clear stack\n");
-					break;
-				case '?':
-					help();
-					break;
-				case '.':
-					end = TRUE;
-					printf("Ok, quit\n");
-					break;
-
-				default:
-					printf("Invalid input : %s\n", usrin);
-			}
+	for (j=1; j < argc; ++j) {
+		handle(argv[j]);
+	}
+	if (argc < 2) {
+		while (!end) {
+			input(usrin);
+			handle(usrin);
 		}
-		printstack();
 	}
 	return 0;
 }
@@ -164,5 +131,48 @@ void clearstack(void) {
 void help(void) {
 	printf("\nCommands:\n");
 	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n");
-	printf("'^':\tpower\n'r':\tsquare root\n\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
+	printf("'^':\tpower\n'r':\tsquare root\n\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n\n");
+}
+
+void handle(char in[]) {
+
+	if (is_number(in)) {
+		push(atof(in));
+	} else {
+		switch( in[0]) {
+			case '+':
+				add();
+				break;
+			case '-':
+				subtract();
+				break;
+			case '*':
+				multiply();
+				break;
+			case '/':
+				divide();
+				break;
+			case '^':
+				power();
+				break;
+			case 'r':
+				squareroot();
+				break;
+			case '!':
+				clearstack();
+				printf("Ok, clear stack\n");
+				break;
+			case '?':
+				help();
+				break;
+			case '.':
+				end = TRUE;
+				printf("Ok, quit\n");
+				break;
+
+			default:
+				printf("Invalid input : %s\n", in);
+		}
+	}
+	printstack();
 }
