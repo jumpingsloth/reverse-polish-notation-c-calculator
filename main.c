@@ -135,7 +135,7 @@ void clearstack(void) {
 void help(void) {
 	printf("\nCommands:\n");
 	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'pi':\tconstant pi\n'e':\tconstant e\n");
-	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n\n'dup':\tduplicate last item on stack\n'!':"\
+	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n'log':\tlogarithm\n\n'dup':\tduplicate last item on stack\n'!':"\
 		"\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
 
@@ -154,7 +154,7 @@ void handle(char in[]) {
 			push(log(pop()));
 		} else if (strcmp(in, "dup") == 0) {
 			push(top());
-		} else {
+		} else if (strlen(in) < 2) {
 			switch (in[0]) {
 				case '+':
 					push(pop() + pop());
@@ -192,6 +192,8 @@ void handle(char in[]) {
 				default:
 					printf("Invalid input : %s\n", in);
 			}
+		} else {
+			printf("Invalid input\n");
 		}
 	}
 	printstack();
