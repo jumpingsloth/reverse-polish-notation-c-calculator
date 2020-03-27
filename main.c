@@ -85,6 +85,7 @@ void add(void) {
 
 void printstack(void) {
 	int i;
+	printf("\n");
 	for (i=0; i < pointer; ++i) {
 		printf("%d:\t%f\n", i, stack[i]);
 	}
@@ -110,14 +111,10 @@ void divide(void) {
 }
 
 void power(void) {
-	double first, last, out;
-	int i;
+	double first, last;
 	last = pop();
 	first = pop();
-	out = first;
-	for (i=2; i <= last; ++i)
-		out = out * first;
-	push(out);
+	push(pow(first, last));
 }
 
 void squareroot(void) {
@@ -134,8 +131,8 @@ void clearstack(void) {
 
 void help(void) {
 	printf("\nCommands:\n");
-	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'p'\tconstant pi\n'e'\tconstant e");
-	printf("'^':\tpower\n'r':\tsquare root\n\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n\n");
+	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'p':\tconstant pi\n'e':\tconstant e\n");
+	printf("'^':\tpower\n'r':\tsquare root\n\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
 
 void handle(char in[]) {
