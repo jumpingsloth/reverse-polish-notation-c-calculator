@@ -11,6 +11,7 @@ typedef unsigned char bool;
 void input(char in[]);
 void push(double);
 double pop(void);
+double top(void);
 bool is_number(char item[]);
 void printstack(void);
 void subtract(void);
@@ -19,7 +20,6 @@ void power(void);
 void clearstack(void);
 void help(void);
 void handle(char in[]);
-void duplicate(void);
 
 double stack[MAXIN];
 int pointer = 0;
@@ -76,6 +76,15 @@ double pop(void) {
 	return 0;
 }
 
+double top(void) {
+	if (pointer > 0) {
+		return stack[pointer - 1];
+	} else {
+		perror("Error: stack is empty");
+	}
+	return 0;
+}
+
 void printstack(void) {
 	int i;
 	printf("\n");
@@ -117,7 +126,8 @@ void clearstack(void) {
 void help(void) {
 	printf("\nCommands:\n");
 	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'pi':\tconstant pi\n'e':\tconstant e\n");
-	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n\n'dup':\tduplicate last item on stack\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
+	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n\n'dup':\tduplicate last item on stack\n'!':"\
+		"\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
 
 void handle(char in[]) {
@@ -134,7 +144,7 @@ void handle(char in[]) {
 		} else if (strcmp(in, "log") == 0) {
 			push(log(pop()));
 		} else if (strcmp(in, "dup") == 0) {
-			duplicate();
+			push(top());
 		} else {
 			switch (in[0]) {
 				case '+':
@@ -176,12 +186,5 @@ void handle(char in[]) {
 		}
 	}
 	printstack();
-}
-
-void duplicate(void) {
-	double item;
-	item = pop();
-	++pointer;
-	push(item);
 }
 
