@@ -12,13 +12,29 @@ A more detailed description of the functions is given below. You can use all fun
 
 '/':	divide
 
-'p':	constant pi
+'pi':	constant pi
 
 'e':	constant e
 
 '^':	power
 
 'r':	square root
+
+'sin':	sinus
+
+'cos':	cosinus
+
+'log':	logarithm
+
+'->a/b/c':	assign variable a/b/c
+
+'a/b/c':	add variable to stack
+
+'var':	print variables
+
+'!var':	clear variables
+
+'dup':	duplicate last item on stack
 
 '!':	clear stack
 
