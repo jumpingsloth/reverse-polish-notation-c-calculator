@@ -14,6 +14,7 @@ double pop(void);
 double top(void);
 bool is_number(char item[]);
 void printstack(void);
+void printstack_sci(void);
 void subtract(void);
 void divide(void);
 void power(void);
@@ -113,6 +114,15 @@ void printstack(void) {
 	printf("\n");
 }
 
+void printstack_sci(void) {
+	int i;
+	printf("\n");
+	for (i=0; i < pointer; ++i) {
+		printf("%d:\t%E\n", i, stack[i]);
+	}
+	printf("\n");
+}
+
 void subtract(void) {
 	double first, last;
 	last = pop();
@@ -176,10 +186,11 @@ void help(void) {
 	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'pi':\tconstant pi\n'e':\tconstant e\n");
 	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n'log':\tlogarithm\n\n");
 	printf("'->a/b/c':\tassign variable a/b/c\n'a/b/c':\tadd variable to stack\n'var':\tprint variables\n'!var':\tclear variables\n\n");
-	printf("'dup':\tduplicate last item on stack\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
+	printf("'dup':\tduplicate last item on stack\n'sci':\tprint stack in scientific notation\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
 
 void handle(char in[]) {
+	bool print = TRUE;
 
 	if (is_number(in)) {
 		push(atof(in));
@@ -210,6 +221,9 @@ void handle(char in[]) {
 			printf("Ok, clear variables\n");
 		} else if (strcmp(in, "fac") == 0) {
 			faculty();
+		} else if (strcmp(in, "sci") == 0) {
+			printstack_sci();
+			print = FALSE;
 		} else if (strlen(in) < 2) {
 			switch (in[0]) {
 				case 'a':
@@ -261,6 +275,8 @@ void handle(char in[]) {
 			printf("Invalid input\n");
 		}
 	}
-	printstack();
-}
+	if (print==TRUE) {
+		printstack();
+	}
 
+}
