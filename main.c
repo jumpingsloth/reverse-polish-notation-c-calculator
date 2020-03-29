@@ -186,6 +186,7 @@ void help(void) {
 	printf("'+':\tadd\n'-':\tsubtract\n'*':\tmultiply\n'/':\tdivide\n'pi':\tconstant pi\n'e':\tconstant e\n");
 	printf("'^':\tpower\n'r':\tsquare root\n'sin':\tsinus\n'cos':\tcosinus\n'log':\tlogarithm\n\n");
 	printf("'->a/b/c':\tassign variable a/b/c\n'a/b/c':\tadd variable to stack\n'var':\tprint variables\n'!var':\tclear variables\n\n");
+	printf("'c->f/f->c':\tconvert celsius/fahrenheit\n\n");
 	printf("'dup':\tduplicate last item on stack\n'sci':\tprint stack in scientific notation\n'!':\tclear stack\n'?':\thelp\n'.':\tquit\n");
 }
 
@@ -203,6 +204,10 @@ void handle(char in[]) {
 			push(cos(pop()));
 		} else if (strcmp(in, "log") == 0) {
 			push(log(pop()));
+		} else if (strcmp(in, "f->c") == 0) {
+			push((pop() − 32) * 5/9);
+		} else if (strcmp(in, "c->f") == 0) {
+			push((pop() * 9/5) + 32);
 		} else if (strcmp(in, "dup") == 0) {
 			push(top());
 		} else if (strcmp(in, "->a") == 0) {
