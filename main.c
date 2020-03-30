@@ -146,7 +146,7 @@ void power(void) {
 
 void clearstack(void) {
 	int i;
-	for (i=0; i<=MAXIN; ++i) {
+	for (i=0; i<MAXIN; ++i) {
 		stack[i] = 0;
 	}
 	pointer = 0;
