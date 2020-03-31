@@ -173,8 +173,9 @@ void faculty(void) {
 	in = (int)pop();
 	if (in < 0) {
 		printf("Error! Factorial of a negative number doesn't exist.");
+		push((double)in);
 	} else {
-		for (i = i; i <= in; ++i) {
+		for (i = 1; i <= in; ++i) {
 			out *= i;
 		}
 		push((double)out);
